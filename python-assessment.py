@@ -1,60 +1,80 @@
 import re
 from collections import Counter
 
+
 with open("News Article for Python Assessment.txt", "r") as file:
     article = file.read()
+
 
 
 def count_specific_word(text, word):
     if not text or not word:
         return 0
-    words = re.findall(r'\b\w+\b', text.lower())
-    return words.count(word.lower())
+    else:
+        words = re.findall(r'\b\w+\b', text.lower())
+        count = 0
+        index = 0
+        while index < len(words):
+            if words[index] == word.lower():
+                count += 1
+            index += 1
+        print(count)
+        return count
 
 
 def identify_most_common_word(text):
     if not text.strip():
+        print(None)
         return None
     words = re.findall(r'\b\w+\b', text.lower())
     if not words:
+        print(None)
         return None
     word_counts = Counter(words)
-    return word_counts.most_common(1)[0][0]
+    most_common = word_counts.most_common(1)[0][0]
+    print(most_common)
+    return most_common
 
 
 
 def calculate_average_word_length(text):
     if not text.strip():
+        print(0)
         return 0
     words = re.findall(r'\b\w+\b', text)
-    if not words:
+    total_length = 0
+    for word in words:
+        total_length += len(word)
+    if len(words) == 0:
+        print(0)
         return 0
-    total_length = sum(len(word) for word in words)
-    return total_length / len(words)
-
+    average = total_length / len(words)
+    print(average)
+    return average
 
 
 def count_paragraphs(text):
     if not text.strip():
+        print(1)
         return 1
     paragraphs = [p for p in text.split('\n\n') if p.strip()]
-    return len(paragraphs)
-
+    count = len(paragraphs)
+    print(count)
+    return count
 
 
 def count_sentences(text):
     if not text.strip():
+        print(0)
         return 0
     sentences = re.findall(r'[^.!?]*[.!?]', text)
-    return len(sentences)
+    count = len(sentences)
+    print(count)
+    return count
 
 
-print("=" * 50)
-print(" NEWS ARTICLE TEXT ANALYSIS RESULTS")
-print("=" * 50)
-print(f"\nWord count for 'apple': {count_specific_word(article, 'apple')}")
-print(f"Most common word: '{identify_most_common_word(article)}'")
-print(f"Average word length: {calculate_average_word_length(article):.2f} characters")
-print(f"Number of paragraphs: {count_paragraphs(article)}")
-print(f"Number of sentences: {count_sentences(article)}")
-print("\n" + "=" * 50)
+count_specific_word(article, 'apple')
+identify_most_common_word(article)
+calculate_average_word_length(article)
+count_paragraphs(article)
+count_sentences(article)
